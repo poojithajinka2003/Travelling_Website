@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
+
+        .details {
+            background-image: linear-gradient(rgb(255, 192, 247), rgb(222, 197, 183), pink, rgb(255, 192, 247));
+            padding-top: 35px;
+            padding-left: 10%;
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .b2, .bb {
+            margin-top: 20px;
+            padding: 13px 40px;
+            line-height: 1.9em;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .submit {
+            padding: 13px 31px;
+            font-weight: bold;
+            font-size: large;
+            background-image: linear-gradient(45deg, rgb(237, 156, 226), rgb(225, 225, 123), rgb(236, 205, 182), rgb(191, 247, 195));
+            cursor: pointer;
+            margin-left: 60%;
+        }
+
+        .b4 {
+            padding: 13px 60px;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .b5 {
+            padding: 13px 77px;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .heading {
+            padding-top: 30px;
+            text-transform: uppercase;
+            background-image: linear-gradient(-225deg, #231557, #d41354, #32870b, rgb(177, 70, 44), rgb(32, 160, 172));
+            background-size: 100% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 40px;
+            font-weight: bold;
+            word-spacing: 10px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            color: #4CAF50;
+        }
+
+        .modal p {
+            color: #333;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="name">
+        <center><h1 class="heading">Registration Form</h1></center>
+        <div class="details">
+            <form name="registrationForm" onsubmit="return validateForm(event)">
+                <div class="b1">
+                    <label><h2>Name:</h2></label>
+                    <input type="text" name="firstName" class="bb" placeholder="First Name">
+                    <input type="text" name="lastName" class="bb" placeholder="Last Name">
+                </div>
+                <div>
+                    <label><h2>Phone Number:</h2></label><br>
+                    <input type="text" name="phoneNumber" class="b2" id="phoneNumber">
+                </div>
+                <br>
+                <div>
+                    <label><h2>Number Of Passengers:</h2></label><br>
+                    <input type="text" name="passengers" class="b2" id="passengers">
+                </div>
+                <br>
+                <div>
+                    <label><h2>Pick Up Date:</h2></label><br>
+                    <input type="date" name="pickUpDate" class="b4">
+                </div>
+                <br>
+                <div>
+                    <label><h2>Pick Up Time:</h2></label><br>
+                    <input type="time" name="pickUpTime" class="b5">
+                </div>
+                <br>
+                <div>
+                    <label><h2>Address:</h2></label><br>
+                    <input type="text" name="address" class="b2">
+                </div>
+                <br>
+                <div>
+                    <label><h2>Destination:</h2></label><br>
+                    <input type="text" name="destination" class="b2" placeholder="Country">
+                    <input type="text" name="destinationState" class="b2" placeholder="State"><br>
+                    <input type="text" name="destinationCity" class="b2" placeholder="City">
+                    <input type="text" name="destinationVillage" class="b2" placeholder="Village"><br>
+                    <input type="text" name="destinationStreet" class="b2" placeholder="Street Address">
+                    <input type="text" name="destinationZip" class="b2" placeholder="Postal/Zip Code"><br>
+                </div>
+                <br>
+                <div>
+                    <input type="submit" class="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal HTML -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Form Submitted Successfully!</h2>
+            <p>Your form has been successfully submitted.</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('phoneNumber').addEventListener('input', function(event) {
+            var value = event.target.value;
+            if (/[^0-9]/.test(value)) {
+                alert("Phone number must contain numbers only");
+                // Remove non-numeric characters
+                event.target.value = value.replace(/[^0-9]/g, '');
+            }
+        });
+
+        function validateForm(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var form = document.forms["registrationForm"];
+            var firstName = form["firstName"].value.trim();
+            var lastName = form["lastName"].value.trim();
+            var phoneNumber = form["phoneNumber"].value.trim();
+            var passengers = form["passengers"].value.trim();
+            var pickUpDate = form["pickUpDate"].value;
+            var pickUpTime = form["pickUpTime"].value;
+            var address = form["address"].value.trim();
+            var destination = form["destination"].value.trim();
+            var state = form["destinationState"].value.trim();
+            var city = form["destinationCity"].value.trim();
+            var village = form["destinationVillage"].value.trim();
+            var street = form["destinationStreet"].value.trim();
+            var postalCode = form["destinationZip"].value.trim();
+
+            // Check if any field is empty
+            if (!firstName || !lastName || !phoneNumber || !passengers || !pickUpDate || !pickUpTime || !address || !destination || !state || !city || !village || !street || !postalCode) {
+                alert("All fields must be filled out");
+                return false;
+            }
+
+            // Validate names and addresses: must be strings, not numbers
+            if (/\d/.test(firstName) || /\d/.test(lastName) || /\d/.test(address) || /\d/.test(destination) || /\d/.test(state) || /\d/.test(city) || /\d/.test(village) || /\d/.test(street)) {
+                alert("Name, address, destination, state, city, village, and street fields cannot contain numbers");
+                return false;
+            }
+
+            // Validate phone number: must be numeric and exactly 10 or 12 digits
+            if (!/^\d+$/.test(phoneNumber) || (phoneNumber.length !== 10 && phoneNumber.length !== 12)) {
+                alert("Phone number must be 10 or 12 digits and contain only numbers");
+                return false;
+            }
+
+            // Validate number of passengers: must be a positive integer
+            if (!/^\d+$/.test(passengers) || parseInt(passengers, 10) <= 0) {
+                alert("Number of passengers must be a positive number");
+                return false;
+            }
+
+            // Validate postal code: must be numeric
+            if (!/^\d+$/.test(postalCode)) {
+                alert("Postal code must be a number");
+                return false;
+            }
+
+            // If all validations pass, show the custom modal
+            showModal();
+            return true;
+        }
+
+        function showModal() {
+            document.getElementById("successModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("successModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
