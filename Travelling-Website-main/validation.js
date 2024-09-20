@@ -12,7 +12,7 @@ function validateForm(event) {
     var destination = form["destination"].value.trim();
     var postalCode = form["postalCode"].value.trim();
 
-    // Check if any field is empty
+   
     if (!firstName || !lastName || !phoneNumber || !passengers || !pickUpDate || !pickUpTime || !address || !destination || !postalCode) {
         alert("All fields must be filled out");
         return false;
